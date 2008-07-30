@@ -16,7 +16,7 @@
 package ${type.packageName};
 
 import org.directwebremoting.ScriptBuffer;
-import org.directwebremoting.proxy.ScriptProxy;
+import org.directwebremoting.ui.ScriptProxy;
 import org.directwebremoting.proxy.io.Context;
 
 /**
@@ -28,13 +28,12 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
 {
     /**
      * All reverse ajax proxies need context to work from
-     * @param scriptProxy The place we are writing scripts to
-     * @param extension The string to add to the parent to fetch this object
      * @param parent The script that got us to where we are now
+     * @param extension The string to add to the parent to fetch this object
      */
-    public ${type.name}(Context parent, String extension, ScriptProxy scriptProxy)
+    public ${type.name}(Context parent, String extension)
     {
-        super(parent, extension, scriptProxy);
+        super(parent, extension);
     }
 
     <#list type.constructors as constructor>
@@ -54,7 +53,7 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
     <@subroutineDoc subroutine=constructor/>
     public ${type.name}(<#list constructor.parameters as parameter>${parameter.type} ${parameter.name}<#if parameter_has_next>, </#if></#list>)
     {
-        super((Context) null, (String) null, (ScriptProxy) null);
+        super((Context) null, (String) null);
         ScriptBuffer script = new ScriptBuffer();
         script.appendCall("new ${type.name}"<#list constructor.parameters as parameter>, ${parameter.name}</#list>);
         setInitScript(script);
@@ -111,7 +110,7 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
     {
         ScriptBuffer script = new ScriptBuffer();
         script.appendCall(getContextPath() + "${method.name}"<#list method.parameters as parameter>, ${parameter.name}</#list>);
-        getScriptProxy().addScript(script);
+        ScriptProxy.addScript(script);
     }
 </#macro>
 
@@ -121,7 +120,7 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
     {
         ScriptBuffer script = new ScriptBuffer();
         script.appendCall(getContextPath() + "${method.name}"<#list method.parameters as parameter>, ${parameter.name}</#list>);
-        getScriptProxy().addScript(script);
+        ScriptProxy.addScript(script);
         return this;
     }
 </#macro>
@@ -134,8 +133,8 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
         String extension = "${method.name}(<#list method.parameters as parameter>\"" + ${parameter.name} + "\"<#if parameter_has_next>, </#if></#list>).";
         try
         {
-            java.lang.reflect.Constructor<${project.asObject(method.returnType.type)}> ctor = ${method.returnType.type}.class.getConstructor(Context.class, String.class, ScriptProxy.class);
-            return ctor.newInstance(this, extension, getScriptProxy());
+            java.lang.reflect.Constructor<${project.asObject(method.returnType.type)}> ctor = ${method.returnType.type}.class.getConstructor(Context.class, String.class);
+            return ctor.newInstance(this, extension);
         }
         catch (Exception ex)
         {
@@ -152,8 +151,8 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
         String extension = "${method.name}(<#list method.parameters as parameter>\"" + ${parameter.name} + "\"<#if parameter_has_next>, </#if></#list>).";
         try
         {
-            java.lang.reflect.Constructor<T> ctor = returnType.getConstructor(Context.class, String.class, ScriptProxy.class);
-            return ctor.newInstance(this, extension, getScriptProxy());
+            java.lang.reflect.Constructor<T> ctor = returnType.getConstructor(Context.class, String.class);
+            return ctor.newInstance(this, extension);
         }
         catch (Exception ex)
         {
@@ -183,7 +182,7 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
             script.appendCall("__System.activateCallback", key, "reply");
         }
 
-        getScriptProxy().addScript(script);
+        ScriptProxy.addScript(script);
     }
 </#macro>
 
