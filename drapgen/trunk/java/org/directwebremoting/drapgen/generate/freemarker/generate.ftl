@@ -16,7 +16,7 @@
 package ${type.packageName};
 
 import org.directwebremoting.ScriptBuffer;
-import org.directwebremoting.ui.ScriptProxy;
+import org.directwebremoting.ScriptSessions;
 import org.directwebremoting.proxy.io.Context;
 
 /**
@@ -110,7 +110,7 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
     {
         ScriptBuffer script = new ScriptBuffer();
         script.appendCall(getContextPath() + "${method.name}"<#list method.parameters as parameter>, ${parameter.name}</#list>);
-        ScriptProxy.addScript(script);
+        ScriptSessions.addScript(script);
     }
 </#macro>
 
@@ -120,7 +120,7 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
     {
         ScriptBuffer script = new ScriptBuffer();
         script.appendCall(getContextPath() + "${method.name}"<#list method.parameters as parameter>, ${parameter.name}</#list>);
-        ScriptProxy.addScript(script);
+        ScriptSessions.addScript(script);
         return this;
     }
 </#macro>
@@ -178,11 +178,11 @@ public class ${type.name} <#if type.superClass??>extends ${type.superClass.fullN
 
         if (callback != null)
         {
-            String key = org.directwebremoting.extend.CallbackHelper.saveCallback(callback, ${project.asObject(method.returnType.type)}.class);
+            String key = org.directwebremoting.extend.CallbackHelperFactory.get().saveCallback(callback, ${project.asObject(method.returnType.type)}.class);
             script.appendCall("__System.activateCallback", key, "reply");
         }
 
-        ScriptProxy.addScript(script);
+        ScriptSessions.addScript(script);
     }
 </#macro>
 
