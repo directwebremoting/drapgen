@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/dwr/core/impl/lib/xom-1.1.jar" sourcepath="/librarydwr/source/xom-1.1.zip">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/librarydwr/source/xom-1.1.zip!/XOM/apidocs"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/freemarker.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/dwr"/>
 	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="lib" path="lib/freemarker.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/dwr-core"/>
+	<classpathentry kind="lib" path="lib/xom-1.1.jar"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>
