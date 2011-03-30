@@ -5,5 +5,7 @@
 	<classpathentry kind="lib" path="lib/freemarker.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/dwr-core"/>
 	<classpathentry kind="lib" path="lib/xom-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/dwr-protocol-dwrp"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>
